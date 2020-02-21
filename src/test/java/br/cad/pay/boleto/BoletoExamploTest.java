@@ -16,6 +16,8 @@ import org.junit.Test;
 
 import br.cad.pay.boleto.bancos.BancoDoBrasil;
 import br.cad.pay.boleto.bancos.Bradesco;
+import br.cad.pay.boleto.bancos.Caixa;
+import br.cad.pay.boleto.bancos.Itau;
 import br.cad.pay.boleto.bancos.Santander;
 import br.cad.pay.boleto.transformer.GeradorDeBoleto;
 
@@ -200,6 +202,105 @@ public class BoletoExamploTest {
 		GeradorDeBoleto gerador = new GeradorDeBoleto(boleto);
 
 		String nameFile = "%s/%s/boleto-santander.%s";
+		
+		// Para gerar um boleto em PDF
+		gerador.geraPDF(String.format(nameFile, TEMP_DIRECTORY, "boletos", "pdf"));
+
+		// Para gerar um boleto em PNG
+		gerador.geraPNG(String.format(nameFile, TEMP_DIRECTORY, "boletos", "png"));
+
+		// Para gerar um array de bytes a partir de um PDF
+		gerador.geraPDF();
+
+		// Para gerar um array de bytes a partir de um PNG
+		gerador.geraPNG();
+		
+		deleteDir();
+	}
+	
+	@Test
+	public void itau() {
+		createDir();
+		
+		log.info("Criando boletos do Bando Itaú");
+		
+		Banco banco = new Itau();
+		
+		// Quem emite o boleto
+		Beneficiario beneficiario = Beneficiario.novoBeneficiario()
+			.comNomeBeneficiario("Fulano de Tal")
+			.comAgencia("1824")
+			.comDigitoAgencia("")
+			.comCodigoBeneficiario("79799")
+			.comDigitoCodigoBeneficiario("1")
+			.comNumeroConvenio("7113")
+			.comCarteira("112")
+			.comEndereco(enderecoBeneficiario)
+			.comDigitoNossoNumero("0")
+			.comNossoNumero("9000206");
+
+		Boleto boleto = Boleto.novoBoleto()
+			.comBanco(banco)
+			.comDatas(datas)
+			.comBeneficiario(beneficiario)
+			.comPagador(pagador)
+			.comValorBoleto("200.00")
+			.comNumeroDoDocumento("1234")
+			.comInstrucoes("instrucao 1", "instrucao 2", "instrucao 3", "instrucao 4", "instrucao 5")
+			.comLocaisDePagamento("local 1", "local 2");
+
+		GeradorDeBoleto gerador = new GeradorDeBoleto(boleto);
+
+		String nameFile = "%s/%s/boleto-santander.%s";
+		
+		// Para gerar um boleto em PDF
+		gerador.geraPDF(String.format(nameFile, TEMP_DIRECTORY, "boletos", "pdf"));
+
+		// Para gerar um boleto em PNG
+		gerador.geraPNG(String.format(nameFile, TEMP_DIRECTORY, "boletos", "png"));
+
+		// Para gerar um array de bytes a partir de um PDF
+		gerador.geraPDF();
+
+		// Para gerar um array de bytes a partir de um PNG
+		gerador.geraPNG();
+		
+		deleteDir();
+	}
+	
+	@Test
+	public void caixaeconomica() {
+		createDir();
+				
+		log.info("Criando boletos da Caixa Economica Federal");
+		
+		Banco banco = new Caixa();
+		
+		// Quem emite o boleto
+		Beneficiario beneficiario = Beneficiario.novoBeneficiario()
+			.comNomeBeneficiario("Fulano de Tal")
+			.comAgencia("1824")
+			.comDigitoAgencia("4")
+			.comCodigoBeneficiario("5893222")
+			.comDigitoCodigoBeneficiario("8")
+			.comNumeroConvenio("1207113")
+			.comCarteira("1")
+			.comEndereco(enderecoBeneficiario)
+			.comNossoNumero("09000206");
+
+		Boleto boleto = Boleto.novoBoleto()
+			.comBanco(banco)
+			.comDatas(datas)
+			.comBeneficiario(beneficiario)
+			.comPagador(pagador)
+			.comValorBoleto("200.00")
+			.comNumeroDoDocumento("1234")
+			.comInstrucoes("instrucao 1", "instrucao 2", "instrucao 3", "instrucao 4", "instrucao 5")
+			.comLocaisDePagamento("local 1", "local 2");
+
+		GeradorDeBoleto gerador = new GeradorDeBoleto(boleto);
+
+		String nameFile = "%s/%s/boleto-bradesco.%s";
 		
 		// Para gerar um boleto em PDF
 		gerador.geraPDF(String.format(nameFile, TEMP_DIRECTORY, "boletos", "pdf"));

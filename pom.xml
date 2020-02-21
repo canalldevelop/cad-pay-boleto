@@ -6,7 +6,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.cad</groupId>
 	<artifactId>cad-pay-boleto</artifactId>
-	<version>1.0.0</version>	
+	<version>1.0.1</version>	
 
     <packaging>jar</packaging>
 	
@@ -39,12 +39,12 @@
 			<id>bj-releases</id>
 			<url>http://maven.franciscanos.net/repository/bj-releases/</url>
 		</repository>
+         -->
 		<repository>
 			<id>github</id>
 			<name>GitHub CanAllDevelop Apache Maven Packages</name>
 			<url>https://maven.pkg.github.com/canalldevelop/cad-pay-boleto</url>
 		</repository>
-		 -->
 	</distributionManagement>
 
 
